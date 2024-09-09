@@ -308,44 +308,12 @@ if ($cidadeBotao != NULL && $cidadeBotao != "") {
 							filtroEstado($conn, $StatusAguardMot, $estadoInput);
 							?>
 
-
-
 							<!-- Filtro cidade -->
 							<select class="selectCidade" id="Cidade" name="Cidade" onchange="this.form.submit()"
 								required>
 								<option name='Cidade' value="1">Todas</option>
 								<?php
-								$sql = "SELECT DISTINCT
-											TB02176_CIDADE Cidade
-										FROM 
-											TB02021
-										LEFT JOIN TB02176 ON TB02176_CODIGO = TB02021_CODSITE
-										WHERE
-											TB02021_STATUS IN ($StatusAguardMot) AND
-											TB02176_CIDADE IS NOT NULL
-											AND TB02176_CIDADE <> ''
-											$estado2
-										ORDER BY TB02176_CIDADE
-									";
-
-								$stmt = sqlsrv_query($conn, $sql);
-
-								if ($stmt === false) {
-									die(print_r(sqlsrv_errors(), true));
-								}
-
-
-								$opcao1 = "";
-
-								while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-									$opcao1 .= "<option name='Cidade' value='$row[Cidade]'>$row[Cidade]</option>";
-
-								}
-
-								$opcao1 .= "<option disabled selected>$cidadeInput</option>
-												</select>";
-
-								print ($opcao1);
+								filtroCidade($conn, $StatusAguardMot, $estado2, $cidadeInput);
 								?>
 
 								<!-- Filtro Bairro -->
@@ -353,37 +321,7 @@ if ($cidadeBotao != NULL && $cidadeBotao != "") {
 									required>
 									<option name='Bairro' value="1">Todos</option>
 									<?php
-									$sql = "SELECT DISTINCT
-												TB02176_BAIRRO Bairro
-											FROM 
-												TB02021
-											LEFT JOIN TB02176 ON TB02176_CODIGO = TB02021_CODSITE
-											WHERE
-												TB02021_STATUS IN ($StatusAguardMot) AND
-												TB02176_BAIRRO IS NOT NULL
-												AND TB02176_BAIRRO <> ''
-												$cidade2
-												$estado2
-											ORDER BY TB02176_BAIRRO
-										";
-
-									$stmt = sqlsrv_query($conn, $sql);
-
-									if ($stmt === false) {
-										die(print_r(sqlsrv_errors(), true));
-									}
-
-
-									$opcao1 = "";
-
-									while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-										$opcao1 .= "<option name='Bairro' value='$row[Bairro]'>$row[Bairro]</option>";
-									}
-
-									$opcao1 .= "<option disabled selected>$bairroInput</option>
-												</select>";
-
-									print ($opcao1);
+									filtroBairro($conn, $StatusAguardMot, $cidade2, $estado2, $bairroInput);
 									?>
 									<?php echo "<input type='hidden' name='nomeMot' id='nomeMot' value='$nomeMot'/>"; ?>
 									<?php echo "<input type='hidden' name='estadoSes' id='estadoSes' value='$estadoSes'/>"; ?>

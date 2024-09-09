@@ -97,3 +97,38 @@ function filtroCidade($conn, $StatusAguardMot, $estado2, $cidadeInput)
 
     print ($opcao1);
 }
+
+function filtroBairro($conn, $StatusAguardMot, $cidade2, $estado2, $bairroInput)
+{
+    $sql = "SELECT DISTINCT
+                TB02176_BAIRRO Bairro
+            FROM 
+                TB02021
+            LEFT JOIN TB02176 ON TB02176_CODIGO = TB02021_CODSITE
+            WHERE
+                TB02021_STATUS IN ($StatusAguardMot) AND
+                TB02176_BAIRRO IS NOT NULL
+                AND TB02176_BAIRRO <> ''
+                $cidade2
+                $estado2
+            ORDER BY TB02176_BAIRRO
+										";
+
+    $stmt = sqlsrv_query($conn, $sql);
+
+    if ($stmt === false) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+
+
+    $opcao1 = "";
+
+    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+        $opcao1 .= "<option name='Bairro' value='$row[Bairro]'>$row[Bairro]</option>";
+    }
+
+    $opcao1 .= "<option disabled selected>$bairroInput</option>
+												</select>";
+
+    print ($opcao1);
+}
