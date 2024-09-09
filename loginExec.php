@@ -9,16 +9,16 @@ $senha = $_POST['password'];
 $_SESSION["login"]=$login;
 $_SESSION["password"]=$senha;
 
-    $sql="SELECT 
-    TB01066_USUARIO Usuario,
-    TB01066_SENHA Senha,
-    TB01066_TIPO Tipo
-
-   FROM 
-    TB01066
-   WHERE 
-   TB01066_USUARIO = '$login'
-   AND TB01066_SENHA = '$senha'";
+    $sql=
+    "SELECT 
+        TB01066_USUARIO Usuario,
+        TB01066_SENHA Senha,
+        TB01066_TIPO Tipo
+    FROM 
+        TB01066
+    WHERE 
+    TB01066_USUARIO = '$login'
+    AND TB01066_SENHA = '$senha'";
     
     $stmt = sqlsrv_query($conn, $sql);
     while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC))
@@ -30,7 +30,7 @@ $_SESSION["password"]=$senha;
     
     if($usuario != NULL){
         
-        echo "<script>location.href='$Url/MotReq1.php'</script>";
+        echo "<script>location.href='$Url/tecos3.php'</script>";
 
     } else{
         echo"<script>window.alert('Usuario e/ou senha invalidos!')</script>";

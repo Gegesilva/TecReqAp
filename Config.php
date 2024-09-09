@@ -1,14 +1,17 @@
 <?php
 /* Variaveis a serem alteradas, mantenha o padrão de preenchimento */
 
-$StatusAguardMot = "'00','01','02','06'"; /* Status de roterização podem ser mais de um padrão "'','',''" */
-$StatusComMot = '08'; /* Status com o motorista */
-$StatusPendente = '83'; /* Entrega não realizada */
-$StatusRot = '00'; /* Utitlizado no retorno do motorista para a roterização */
-$CodMotGeral = '0000'; /* Motorista geral para retorno */
-$Url = 'http://localhost:8090/phpprod/apnet/tecReqAp';
+$StatusAguardTec = "'03', '09', '21', '10', '12', '14', '16', '07', '06', '01', '18', '19', '00', '23'";
+$StatusComTec = '02';
+$StatusPendednte = "'04','05'";
+$Url = 'http://apnetworks.brazilsouth.cloudapp.azure.com:8090/tecosap';
 
 $server = 'localhost';
-$base = 'APNET';
+$base = 'positiva';
 $usuarioBanco = 'sa';
 $SenhaBanco = 'databit@2022';
+
+
+/* Tela critica */
+
+$StatusSpecifico = '15';

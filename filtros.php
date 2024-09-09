@@ -1,47 +1,51 @@
 <?php
-include_once "config.php";
-function filtroMot($conn, $nomeMot)
+include_once ("conexaoSQL.php");
+function filtroTec($nomeTec, $conn)
 {
-    $sql = "SELECT 
-                TB01077_CODIGO CodMot,
-                TB01077_NOME NomeMot
-            FROM TB01077
-            WHERE 
-            TB01077_SITUACAO = 'A'
-            ORDER BY TB01077_NOME
-        ";
+
+    $sql =
+        "SELECT 
+            TB01066_TECNICO CodTec,
+            TB01024_NOME NomeTec
+        FROM TB01066
+        LEFT JOIN TB01024 ON TB01024_CODIGO = TB01066_TECNICO
+        WHERE TB01066_TIPO = '4'
+        AND TB01066_OUTSOURCING = 'S'
+        AND TB01024_SITUACAO = 'A'
+        ORDER BY TB01024_NOME
+    ";
 
     $stmt = sqlsrv_query($conn, $sql);
-
-    if ($stmt === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
-
 
     $opcao1 = "";
 
     while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-        $opcao1 .= "<option name='Motorista' value='$row[CodMot]'>$row[NomeMot]</option>";
+        $opcao1 .= "<option name='Tecnico' value='$row[CodTec]'>$row[NomeTec]</option>";
 
     }
 
-    $opcao1 .= " <option disabled selected>$nomeMot</option>
-									             </select>";
-    print ($opcao1);
+    $opcao1 .= " <option disabled selected>$nomeTec</option>
+                         </select>";
+    return print ($opcao1);
 }
-function filtroEstado($conn, $StatusAguardMot, $estadoInput)
+
+
+
+function filtroEstado($StatusAguardTec, $estadoInput, $conn)
 {
     $sql = "SELECT DISTINCT
-                TB02176_ESTADO Estado
+                TB02115_ESTADO Estado
             FROM 
-                TB02021
-            LEFT JOIN TB02176 ON TB02176_CODIGO = TB02021_CODSITE
+                TB02115
             WHERE
-                TB02021_STATUS IN ($StatusAguardMot) AND
-                TB02176_ESTADO IS NOT NULL
-                AND TB02176_ESTADO <> ''
-            ORDER BY TB02176_ESTADO
-        ";
+                TB02115_STATUS IN ($StatusAguardTec) AND
+                TB02115_ESTADO IS NOT NULL
+                AND TB02115_ESTADO <> ''
+                AND TB02115_DTFECHA IS NULL
+                AND TB02115_CODCLI <> '00000000'
+                AND TB02115_PREVENTIVA <> 'R'
+            ORDER BY TB02115_ESTADO
+                    ";
 
     $stmt = sqlsrv_query($conn, $sql);
 
@@ -58,25 +62,28 @@ function filtroEstado($conn, $StatusAguardMot, $estadoInput)
     }
 
     $opcao1 .= "<option disabled selected>$estadoInput</option>
-												</select>";
-
-    print ($opcao1);
+                                </select>";
+    return print ($opcao1);
 }
 
-function filtroCidade($conn, $StatusAguardMot, $estado2, $cidadeInput)
+
+function filtroCidade($StatusAguardTec, $estado2, $conn, $cidadeInput)
 {
-    $sql = "SELECT DISTINCT
-                TB02176_CIDADE Cidade
-            FROM 
-                TB02021
-            LEFT JOIN TB02176 ON TB02176_CODIGO = TB02021_CODSITE
-            WHERE
-                TB02021_STATUS IN ($StatusAguardMot) AND
-                TB02176_CIDADE IS NOT NULL
-                AND TB02176_CIDADE <> ''
-                $estado2
-            ORDER BY TB02176_CIDADE
-        ";
+    $sql =
+        "SELECT DISTINCT
+            TB02115_CIDADE Cidade
+         FROM 
+            TB02115
+         WHERE
+            TB02115_STATUS IN ($StatusAguardTec) AND
+            TB02115_CIDADE IS NOT NULL
+            AND TB02115_CIDADE <> ''
+            AND TB02115_DTFECHA IS NULL
+            AND TB02115_CODCLI <> '00000000'
+            AND TB02115_PREVENTIVA <> 'R'
+            $estado2
+         ORDER BY TB02115_CIDADE
+                ";
 
     $stmt = sqlsrv_query($conn, $sql);
 
@@ -93,26 +100,29 @@ function filtroCidade($conn, $StatusAguardMot, $estado2, $cidadeInput)
     }
 
     $opcao1 .= "<option disabled selected>$cidadeInput</option>
-												</select>";
+                            </select>";
 
-    print ($opcao1);
+    return print ($opcao1);
 }
 
-function filtroBairro($conn, $StatusAguardMot, $cidade2, $estado2, $bairroInput)
+
+function filtroBairro($StatusAguardTec, $cidade2, $estado2, $bairroInput, $conn)
 {
     $sql = "SELECT DISTINCT
-                TB02176_BAIRRO Bairro
+                TB02115_BAIRRO Bairro
             FROM 
-                TB02021
-            LEFT JOIN TB02176 ON TB02176_CODIGO = TB02021_CODSITE
+                TB02115
             WHERE
-                TB02021_STATUS IN ($StatusAguardMot) AND
-                TB02176_BAIRRO IS NOT NULL
-                AND TB02176_BAIRRO <> ''
+                TB02115_STATUS IN ($StatusAguardTec)
+                AND TB02115_BAIRRO IS NOT NULL
+                AND TB02115_BAIRRO <> ''
+                AND TB02115_DTFECHA IS NULL
+                AND TB02115_CODCLI <> '00000000'
+                AND TB02115_PREVENTIVA <> 'R'
                 $cidade2
                 $estado2
-            ORDER BY TB02176_BAIRRO
-										";
+            ORDER BY TB02115_BAIRRO
+                    ";
 
     $stmt = sqlsrv_query($conn, $sql);
 
@@ -128,7 +138,8 @@ function filtroBairro($conn, $StatusAguardMot, $cidade2, $estado2, $bairroInput)
     }
 
     $opcao1 .= "<option disabled selected>$bairroInput</option>
-												</select>";
+                                </select>";
 
-    print ($opcao1);
+    return print ($opcao1);
+
 }

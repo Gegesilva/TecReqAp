@@ -404,7 +404,7 @@ if (isset($codTec)) {
 							$cidade2
 							$bairro2
 							$estado2
-						ORDER BY TB02115_DATA ASC
+						ORDER BY TB02115_DATA DESC
 						
 				";
 					$stmt = sqlsrv_query($conn, $sql);
@@ -418,7 +418,7 @@ if (isset($codTec)) {
 							<tr>
 								<th scope="col" style="width:;">TIPO</th>
 								<th scope="col" style="width:;">OS</th>
-								<!-- <th scope="col" style="width:;">MODELO</th> -->
+								<th scope="col" style="width:;">STATUS</th>
 								<th scope="col" style="width:;">ABERTURA</th>
 								<th scope="col" style="width:;">NOME</th>
 								<th scope="col" style="width:;">UF</th>
@@ -462,7 +462,7 @@ if (isset($codTec)) {
 							  </script>
 							 </form>
 							</td>";
-							/* $tabela .= "<td>" . $row['Modelo'] . "</td>"; */
+							$tabela .= "<td>" . $row['NomeStatus'] . "</td>";
 							$tabela .= "<td>" . $row['DataAbertura'] . "</td>";
 							$tabela .= "<td>" . $row['NomeCli'] . "</td>";
 							$tabela .= "<td><b>" . $row['uf'] . "</b></td>";
@@ -594,7 +594,7 @@ if (isset($codTec)) {
 					AND TB02115_CODCLI <> '00000000'
 					AND TB02115_PREVENTIVA <> 'R'
 					AND TB02111_TIPOCONTR = 'L'
-				ORDER BY TB02115_CODIGO 
+				ORDER BY TB02115_DATA DESC 
 				
 				";
 					$stmt = sqlsrv_query($conn, $sql);
@@ -775,7 +775,7 @@ if (isset($codTec)) {
 					AND TB02115_PREVENTIVA <> 'R'
 					AND TB02111_TIPOCONTR = 'L'
 					$cidade2
-				ORDER BY TB02115_CODIGO
+				ORDER BY TB02115_DATA DESC
 				
 				";
 					$stmt = sqlsrv_query($conn, $sql);
