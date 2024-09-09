@@ -1,0 +1,74 @@
+
+body{
+	background-image: url(https://i.ibb.co/0VZRMHx/databitoriginal-escura.jpg);
+  font-family: 'Segoe UI','Arial';
+  overflow-x: scroll;
+
+  /* display: flex; */
+  /* align-items: center;
+  justify-content: center; */
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+}
+  
+  .container {
+      height: 600px;
+      overflow-y: scroll;
+   }
+
+
+  .divcentral{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20%;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    width: 40%;
+    height: 40%;
+  }
+
+  .inputcod{
+    border-radius: 20px;
+    height: 30px;
+    text-align: center;
+  }
+  .titulo{
+    color: white;
+    font-size: small;
+  }
+  
+  .btn-inicio{
+    margin-left: 60px;
+    margin-top: 2%;
+    background: #ADD8E6;
+    color:#F5F5F5;
+    cursor: pointer;
+    border:1;
+    border-radius: 3px;
+    margin-left: 60px;
+    padding: 5%;
+    border-radius: 10px;
+  }
+
+  .voltar{
+    background-color: #0000CD;
+      color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    float: right;
+    border: 0px;
+      box-shadow: 3px 4px #ccc;
+    display: flex;
+    margin-top: 0;
+  }
+  
+
+  
+ 
+  
+  
+  
